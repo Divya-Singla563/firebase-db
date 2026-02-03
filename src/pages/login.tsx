@@ -3,7 +3,8 @@ import {
     getAuth,
     signInWithEmailAndPassword,
     signInWithPopup,
-    GithubAuthProvider
+    GithubAuthProvider,
+    GoogleAuthProvider
 } from 'firebase/auth';
 import { app } from '../firebase';
 import './signup.css';
@@ -17,6 +18,7 @@ const Login = () => {
 
     const auth = getAuth(app);
     const githubProvider = new GithubAuthProvider();
+    const googleProvider = new GoogleAuthProvider();
 
     const handleSignUp = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -61,6 +63,26 @@ const Login = () => {
         } catch (error: any) {
             console.error(error);
             setError(error.message || 'GitHub login failed');
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            console.log('0')
+            const result = await signInWithPopup(auth, googleProvider);
+            console.log(result, '1 google');
+
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential?.accessToken;
+            const user = result.user;
+
+            console.log('Google User:', user);
+            console.log('Google Token:', token);
+
+            setSuccess(true);
+        } catch (error: any) {
+            console.error(error);
+            setError(error.message || 'Google login failed');
         }
     };
 
@@ -135,6 +157,7 @@ const Login = () => {
                     </div>
 
                     <button onClick={handleGithubLogin}>Login with GitHub</button>
+                    <button onClick={handleGoogleLogin}>Login with Google</button>
 
                     <button
                         type="submit"

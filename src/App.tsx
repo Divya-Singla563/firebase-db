@@ -4,6 +4,8 @@ import { getDatabase, ref, set } from 'firebase/database'
 import { app } from './firebase.ts'
 import SignUp from './pages/signup.tsx'
 import Login from './pages/login.tsx'
+import { useEffect } from 'react'
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 
 function App() {
 
@@ -17,7 +19,17 @@ function App() {
     })
   }
 
+  const auth = getAuth(app)
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user.uid, 'userr', user)
+      } else {
+        console.log('user is logged out')
+      }
+    })
+  }, [])
 
   return (
     <>
@@ -25,6 +37,8 @@ function App() {
       <button onClick={putData}>Put Data</button>
       {/* <SignUp /> */}
       <Login />
+      <button onClick={() => signOut(auth)}>Log out</button>
+
     </>
   )
 }
