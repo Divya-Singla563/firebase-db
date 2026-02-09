@@ -6,6 +6,7 @@ import SignUp from './pages/signup.tsx'
 import Login from './pages/login.tsx'
 import { useEffect } from 'react'
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
+import FirestoreCheck from './pages/firestore-check.tsx'
 
 function App() {
 
@@ -33,9 +34,10 @@ function App() {
 
   return (
     <>
+      <FirestoreCheck />
       {/* <h1>Firebase Realtime Database</h1> */}
       <button onClick={putData}>Put Data</button>
-      {/* <SignUp /> */}
+      <SignUp />
       <Login />
       <button onClick={() => signOut(auth)}>Log out</button>
 
