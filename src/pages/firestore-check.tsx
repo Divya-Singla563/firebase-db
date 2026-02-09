@@ -36,7 +36,7 @@ const FirestoreCheck = () => {
         console.log(querySnapshot.docs.map(doc => doc.data()), 'querySnapshot', querySnapshot)
 
         const users = querySnapshot.docs.map(doc => ({
-            id: doc.id,        // 🔹 Firestore document ID
+            id: doc.id,        // 🔹
             ...doc.data(),     // 🔹 Document fields
         }));
         console.log(users, 'users')
